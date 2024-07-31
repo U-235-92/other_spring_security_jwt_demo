@@ -1,22 +1,24 @@
 package com.other.app.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
-
 import com.other.app.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
+@Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -24,9 +26,9 @@ public class SecurityConfiguration {
 	
 	@Bean
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		// TODO Wait for adjust
-		http.authorizeHttpRequests(requestCusomizer -> requestCusomizer
-				.requestMatchers(""));
+		http.csrf(csrfCustomizer -> csrfCustomizer.disable())
+			.sessionManagement(sessionConfigurer -> sessionConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.authorizeHttpRequests(requestCustomizer -> requestCustomizer.requestMatchers("/app/authenticate").permitAll());
 		return http.build();
 	}
 	

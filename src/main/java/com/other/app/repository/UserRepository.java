@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.other.app.entity.Message;
 import com.other.app.entity.User;
 
-public interface DbJpaUserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByUsername(String username);
 	@Query(value = "Select Message m From User u Where u.username = username")
