@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "app.jwt.accessTokenLifetime",
+    "type": "java.time.Duration",
+    "description": "Total lifetime of access token"
+  },
+  {
+    "name": "app.jwt.secret",
+    "type": "java.lang.String",
+    "description": "JWT sign secret"
+  }
+]}

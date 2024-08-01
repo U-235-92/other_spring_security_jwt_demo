@@ -1,6 +1,8 @@
 package com.other.app.dto;
 
-import com.other.app.entity.Role;
+import java.util.Set;
+
+import com.other.app.entity.Permition;
 import com.other.app.entity.Status;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,6 @@ public class UserDTO {
 	private String username;
 	private String password;
 	private String email;
-	private Role role;
+	private Set<Permition> permitions;
 	private Status status;
 }

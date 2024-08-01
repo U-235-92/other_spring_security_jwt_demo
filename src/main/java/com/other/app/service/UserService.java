@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.other.app.dto.UserDTO;
 import com.other.app.entity.Status;
 import com.other.app.entity.User;
-import com.other.app.repository.DbJpaUserRepository;
+import com.other.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-	private DbJpaUserRepository userRepository;
+	private UserRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
 		if(user == null) {
 			throw new UsernameNotFoundException("User not found");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRole().getPermitions()
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getPermitions()
 				.stream()
 				.map(permition -> new SimpleGrantedAuthority(permition.name()))
 				.collect(Collectors.toList()));

@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.other.app.dto.MessageDTO;
 import com.other.app.entity.Message;
-import com.other.app.repository.DbJpaMessageRepository;
-import com.other.app.repository.DbJpaUserRepository;
+import com.other.app.repository.MessageRepository;
+import com.other.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageService {
 	
-	private final DbJpaMessageRepository messageRepository;
-	private final DbJpaUserRepository userRepository;
+	private final MessageRepository messageRepository;
+	private final UserRepository userRepository;
 	private final UserService userService;
 
 	public void postMessage(MessageDTO messageDTO, Principal principal) {
