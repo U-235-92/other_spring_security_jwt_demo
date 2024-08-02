@@ -1,9 +1,7 @@
 package com.other.app.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -39,7 +37,7 @@ public class User {
 	@CollectionTable(name = "user_permitions")
 	@Column(name = "permition")
 	@Enumerated(EnumType.STRING)
-	private Set<Permition> permitions = new HashSet<>();
+	private List<Permition> permitions = new ArrayList<>();
 	@OneToMany
 	@JoinColumn(name = "user_id")
 	private List<Message> messages = new ArrayList<>();

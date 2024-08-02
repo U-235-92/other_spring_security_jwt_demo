@@ -1,6 +1,6 @@
 package com.other.app.service;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 		user.setUsername(registrationRequestDTO.getUsername());
 		user.setPassword(registrationRequestDTO.getPassword());
 		user.setEmail(registrationRequestDTO.getEmail());
-		user.setPermitions(Set.of(Permition.READ_MESSAGE));
+		user.setPermitions(List.of(Permition.READ_MESSAGE));
 		userRepository.save(user);
 	}
 }

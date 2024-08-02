@@ -11,7 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.other.app.entity.Permition;
+import com.other.app.filter.JwtFilter;
 import com.other.app.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration2 {
 
 	private final UserService userService;
+	private final JwtFilter jwtFilter;
 
 	@Bean
 	protected SecurityFilterChain securityConfiguration(HttpSecurity http) throws Exception {
@@ -29,7 +33,13 @@ public class SecurityConfiguration2 {
 				.sessionManagement(
 						sessionConfigurer -> sessionConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(
-						requestCustomizer -> requestCustomizer.requestMatchers("/app/authenticate/**").permitAll());
+						requestCustomizer -> requestCustomizer
+							.requestMatchers("/app/message/post/**").hasAuthority(Permition.POST_MESSAGE.name())
+							.requestMatchers("/app/message/delete/**").hasAuthority(Permition.DELETE_MESSAGE.name())
+							.requestMatchers("/app/message/read/**").hasAuthority(Permition.READ_MESSAGE.name())
+							.requestMatchers("/app/authenticate/**").permitAll()
+							.requestMatchers("/app/registration/**").permitAll())
+				.addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 

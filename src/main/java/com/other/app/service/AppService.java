@@ -3,6 +3,7 @@ package com.other.app.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.other.app.dto.MessageDTO;
 import com.other.app.entity.Message;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AppService {
 
 	private final MessageRepository messageRepository;
@@ -35,11 +37,11 @@ public class AppService {
 		userRepository.save(user);
 	}
 
-	public List<Message> getAllMessages() {
+	public List<Message> readMessages() {
 		return messageRepository.findAll();
 	}
 
-	public List<Message> getUserMessages(String username) {
+	public List<Message> readUserMessages(String username) {
 		List<Message> messages = userRepository.findUserMessages(username);
 		return messages;
 	}
