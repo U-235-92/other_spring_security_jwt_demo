@@ -19,7 +19,7 @@ public class AuthService {
 	private final JwtUtil jwtUtil;
 	
 	public String authenticate(String username, String password) {
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		User user = userRepository.findByUsername(username);
 		String token = jwtUtil.generateToken(user);
 		return token;
