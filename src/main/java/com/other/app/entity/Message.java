@@ -8,16 +8,16 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "messages")
 @NoArgsConstructor
 @Data
+@Entity
+@Table(name = "messages")
 public class Message {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "message_id")
+	@Column(name = "id", nullable = false)
 	private long id;
-	@Column(name = "message_text")
+	@Column(name = "text")
 	private String text;
 }

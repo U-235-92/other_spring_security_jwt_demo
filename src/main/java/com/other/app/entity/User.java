@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.other.app.dto.UserDTO;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -21,39 +19,28 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
-@Data
-@NoArgsConstructor
 public class User {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "user_id")
+	@Column(nullable = false, name = "id")
 	private long id;
-	@Column(name = "user_name", unique = true)
+	@Column(name = "username")
 	private String username;
-	@Column(name = "user_password")
+	@Column(name = "password")
 	private String password;
-	@Column(name = "user_email")
+	@Column(name = "email")
 	private String email;
 	@ElementCollection
-	@CollectionTable(name = "permitions")
+	@CollectionTable(name = "user_permitions")
 	@Column(name = "permition")
-	private Set<Permition> permitions = new HashSet<>();
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private Set<Permition> permitions = new HashSet<>();
 	@OneToMany
 	@JoinColumn(name = "user_id")
 	private List<Message> messages = new ArrayList<>();
-	
-	public static User fromUserDTO(UserDTO userDTO) {
-		User user = new User();
-		user.setUsername(userDTO.getUsername());
-		user.setPassword(userDTO.getPassword());
-		user.setEmail(userDTO.getEmail());
-		user.setPermitions(userDTO.getPermitions());
-		user.setStatus(userDTO.getStatus());
-		return user;
-	}
 }

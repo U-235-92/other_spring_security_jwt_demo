@@ -10,7 +10,7 @@ import com.other.app.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByUsername(String username);
+	User findByUsername(String usernme);
 	@Query(value = "Select Message m From User u Where u.username = username")
 	List<Message> findUserMessages(String username);
 }
