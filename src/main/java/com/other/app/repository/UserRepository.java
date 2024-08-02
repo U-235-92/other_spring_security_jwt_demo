@@ -10,7 +10,8 @@ import com.other.app.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	User findByUsername(String username);
-	@Query(value = "Select Message m From User u Where u.username = username")
+	User findByUsername(String usernme);
+//	@Query(value = "Select Message m From User u Where u.username = username")
+	@Query(nativeQuery = true, value = "Select * From messages Inner Join users On messages.user_id = users.id Where users.username = :username")
 	List<Message> findUserMessages(String username);
 }

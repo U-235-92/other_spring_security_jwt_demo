@@ -1,6 +1,5 @@
 package com.other.app.service;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,49 +7,43 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.other.app.dto.MessageDTO;
 import com.other.app.entity.Message;
+import com.other.app.entity.User;
 import com.other.app.repository.MessageRepository;
 import com.other.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
-public class MessageService {
-	
+@Transactional
+public class AppService {
+
 	private final MessageRepository messageRepository;
 	private final UserRepository userRepository;
-	private final UserService userService;
-
-	public void postMessage(MessageDTO messageDTO, Principal principal) {
+	
+	public void postMessage(MessageDTO messageDTO) {
 		Message message = new Message();
 		message.setText(messageDTO.getText());
 		messageRepository.save(message);
 	}
-	
+
 	public void deleteMessage(long id) {
 		messageRepository.deleteById(id);
 	}
-	
-	public void deleteUserMessages(String username) {
-		userService.deleteUserMessages(username);
+
+	public void deleteAllUserMessages(String username) {
+		User user = userRepository.findByUsername(username);
+		user.getMessages().clear();
+		userRepository.save(user);
 	}
-	
-	public void editMessage(long id, MessageDTO messageDTO) {
-		Message message = getMessage(id);
-		message.setText(messageDTO.getText());
-		messageRepository.save(message);
-	}
-	
-	public Message getMessage(long id) {
-		return messageRepository.getReferenceById(id);
-	}
-	
-	public List<Message> getUserMessages(String username) {
-		return userRepository.findUserMessages(username);
-	}
-	
-	public List<Message> getAllMessages() {
+
+	public List<Message> readMessages() {
 		return messageRepository.findAll();
 	}
+
+	public List<Message> readUserMessages(String username) {
+		List<Message> messages = userRepository.findUserMessages(username);
+		return messages;
+	}
+
 }
