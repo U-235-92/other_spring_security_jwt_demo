@@ -33,7 +33,7 @@ public class AppService {
 
 	public void deleteAllUserMessages(String username) {
 		User user = userRepository.findByUsername(username);
-		user.getMessages().clear();
+		user.getMessages().removeAll(user.getMessages());
 		userRepository.save(user);
 	}
 
@@ -42,8 +42,12 @@ public class AppService {
 	}
 
 	public List<Message> readUserMessages(String username) {
-		List<Message> messages = userRepository.findUserMessages(username);
+		List<Message> messages = messageRepository.findUserMessagesByUsername(username);
 		return messages;
+	}
+
+	public List<User> getUsers() {
+		return userRepository.findAll();
 	}
 
 }

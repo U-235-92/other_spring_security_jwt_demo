@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.other.app.dto.MessageDTO;
 import com.other.app.entity.Message;
+import com.other.app.entity.User;
 import com.other.app.service.AppService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/app/message")
+@RequestMapping("/app")
 public class AppController {
 
 	private final AppService appService;
 	
-	@PostMapping("/post")
+	@PostMapping("/message/post")
 	@ResponseBody
 	public String postMessage(@RequestBody MessageDTO messageDTO) {
 		appService.postMessage(messageDTO);
@@ -32,7 +33,7 @@ public class AppController {
 		return response;
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/message/delete/id/{id}")
 	@ResponseBody
 	public String deleteMessage(@PathVariable long id) {
 		appService.deleteMessage(id);
@@ -40,7 +41,7 @@ public class AppController {
 		return response;
 	}
 	
-	@DeleteMapping("/delete/{username}")
+	@DeleteMapping("/message/delete/username/{username}")
 	@ResponseBody
 	public String deleteUserMessages(@PathVariable String username) {
 		appService.deleteAllUserMessages(username);
@@ -48,15 +49,21 @@ public class AppController {
 		return response;
 	}
 	
-	@GetMapping("/read")
+	@GetMapping("/message/read")
 	@ResponseBody
 	public List<Message> readMessages() {
 		return appService.readMessages();
 	}
 	
-	@GetMapping("/read/{username}")
+	@GetMapping("/message/read/{username}")
 	@ResponseBody
 	public List<Message> readUserMessages(@PathVariable String username) {
 		return appService.readUserMessages(username);
+	}
+	
+	@GetMapping("/user/all")
+	@ResponseBody
+	public List<User> getUsers() {
+		return appService.getUsers();
 	}
 }
