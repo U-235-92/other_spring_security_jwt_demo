@@ -1,5 +1,6 @@
 package com.other.app.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,8 +28,8 @@ public class AppController {
 	
 	@PostMapping("/message/post")
 	@ResponseBody
-	public String postMessage(@RequestBody MessageDTO messageDTO) {
-		appService.postMessage(messageDTO);
+	public String postMessage(@RequestBody MessageDTO messageDTO, Principal principal) {
+		appService.postMessage(messageDTO, principal);
 		String response = "Message posted success";
 		return response;
 	}
@@ -49,13 +50,13 @@ public class AppController {
 		return response;
 	}
 	
-	@GetMapping("/message/read")
+	@GetMapping("/message/read/all")
 	@ResponseBody
 	public List<Message> readMessages() {
 		return appService.readMessages();
 	}
 	
-	@GetMapping("/message/read/{username}")
+	@GetMapping("/message/read/user/{username}")
 	@ResponseBody
 	public List<Message> readUserMessages(@PathVariable String username) {
 		return appService.readUserMessages(username);

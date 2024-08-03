@@ -30,7 +30,7 @@ public class DbFiller {
 		simple.setUsername("simple");
 		simple.setPassword(passwordEncoder.encode("2"));
 		simple.setEmail("simple@my.aq");
-		simple.setPermitions(List.of(Permition.READ_MESSAGE));
+		simple.setPermitions(List.of(Permition.READ_MESSAGE, Permition.POST_MESSAGE));
 		userRepository.saveAll(List.of(admin, simple));
 	}
 }

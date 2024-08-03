@@ -37,7 +37,6 @@ public class SecurityConfiguration2 {
 							.requestMatchers("/app/message/post/**").hasAuthority(Permition.POST_MESSAGE.name())
 							.requestMatchers("/app/message/delete/**").hasAuthority(Permition.DELETE_MESSAGE.name())
 							.requestMatchers("/app/message/read/**").hasAuthority(Permition.READ_MESSAGE.name())
-							.requestMatchers("/app/message/read/**").hasAuthority(Permition.READ_MESSAGE.name())
 							.requestMatchers("/app/user/all/**").hasAuthority(Permition.READ_MESSAGE.name())
 							.requestMatchers("/app/authenticate/**").permitAll()
 							.requestMatchers("/app/registration/**").permitAll())

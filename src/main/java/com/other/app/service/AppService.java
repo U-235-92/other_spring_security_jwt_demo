@@ -1,5 +1,6 @@
 package com.other.app.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ public class AppService {
 	private final MessageRepository messageRepository;
 	private final UserRepository userRepository;
 	
-	public void postMessage(MessageDTO messageDTO) {
+	public void postMessage(MessageDTO messageDTO, Principal principal) {
 		Message message = new Message();
 		message.setText(messageDTO.getText());
+		User user = userRepository.findByUsername(principal.getName());
+		user.getMessages().add(message);
 		messageRepository.save(message);
+		userRepository.save(user);
 	}
 
 	public void deleteMessage(long id) {
@@ -32,9 +36,7 @@ public class AppService {
 	}
 
 	public void deleteAllUserMessages(String username) {
-		User user = userRepository.findByUsername(username);
-		user.getMessages().removeAll(user.getMessages());
-		userRepository.save(user);
+		messageRepository.deleteUserMessages(username);
 	}
 
 	public List<Message> readMessages() {
