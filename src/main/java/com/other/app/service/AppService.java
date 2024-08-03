@@ -27,7 +27,6 @@ public class AppService {
 		message.setText(messageDTO.getText());
 		User user = userRepository.findByUsername(principal.getName());
 		user.getMessages().add(message);
-		messageRepository.save(message);
 		userRepository.save(user);
 	}
 

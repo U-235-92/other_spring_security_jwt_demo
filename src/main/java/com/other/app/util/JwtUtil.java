@@ -28,7 +28,7 @@ public class JwtUtil {
 		Date issuedDate = new Date();
 		Date expiredDate = new Date(issuedDate.getTime() + accessTokenLifetime.toMillis());
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("permitions", user.getPermitions());
+		claims.put("permitions", user.getPermitions().stream().map(perm -> perm.name()).toList());
 		return Jwts
 				.builder()
 				.issuedAt(issuedDate)

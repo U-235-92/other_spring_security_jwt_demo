@@ -3,6 +3,7 @@ package com.other.app.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -38,7 +39,7 @@ public class User {
 	@Column(name = "permition")
 	@Enumerated(EnumType.STRING)
 	private List<Permition> permitions = new ArrayList<>();
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id")
 	private List<Message> messages = new ArrayList<>();
 }
